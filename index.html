@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Manager</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        h2 {
+            color: #333;
+        }
+        #result {
+            font-size: 18px;
+            font-weight: bold;
+            color: #27ae60;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Attendance Manager</h2>
+        <label>Number of Hours Conducted:</label>
+        <input type="number" id="ch" step="any"><br>
+        <label>Number of Hours Attended:</label>
+        <input type="number" id="ah" step="any"><br>
+        <label>Required Attendance Percentage:</label>
+        <input type="number" id="goal" step="any"><br>
+        <button onclick="calculateAttendance()">Calculate</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function calculateAttendance() {
+            let ch = parseFloat(document.getElementById("ch").value);
+            let ah = parseFloat(document.getElementById("ah").value);
+            let goal = parseFloat(document.getElementById("goal").value) / 100;
+            let ha = 0;
+            let per = ah / ch;
+
+            if (per < goal) {
+                while (per < goal) {
+                    ha++;
+                    ah++;
+                    ch++;
+                    per = ah / ch;
+                }
+                document.getElementById("result").innerText = `You need to attend at least ${ha} more classes to reach ${goal * 100}% attendance.`;
+            } else {
+                document.getElementById("result").innerText = "You already have the required attendance.";
+            }
+        }
+    </script>
+</body>
+</html>
